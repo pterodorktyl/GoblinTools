@@ -1,0 +1,44 @@
+//The systemhot command uses the same syntax as the ssh source file.
+	if params.len < 2 or params.len > 3 then exit("Proper Syntax: startjob user@pass [ip].")
+credentials = params[0].split("@")
+user = credentials[0]
+password = credentials[1]
+port = 22
+//Convert params to integer, which is what connect_service accepts.
+	if params.len == 3 then port = params[2].to_int
+	if typeof(port) != "number" then exit("Invalid port: " + port)
+//Declare file handling parameters for yourself. You're a computer now.
+computer = get_shell.host_computer
+//Declare file handling parameters for your aptclient.so file.
+aptcli = computer.File("/aptclient.so")
+//Remove aptclient.co out of the forever box so that you can download your libraries.
+output = aptcli.move("/lib", "aptclient.so")
+//Check to make sure aptcli made it safely and create a new identity for it in this script.
+aptclient = include_lib("/lib/aptclient.so")
+//Declare a list of the locations that will hold your preferred hackbox libraries.
+vulnlibs = ["/lib/metaxploit.so", "/lib/librshell.so", "/lib/crypto.so"]
+//Run a for loop to download your libraries.
+//Splitting the string will produce file names instead of directory paths, which you want.
+	for eachlib in vulnlibs
+		aptclient.install(eachlib[5:])
+	end for 
+// Obtain shell on hackbox to initiate file transfers.
+shell = get_shell.connect_service(params[1], port, user, password, "ssh")
+		print("Arming hackbox.")
+//Copy main machine's /bin to hackbox.
+		get_shell.scp("/bin", "/bin", shell)
+//Run a for loop through vulnlibs to pass your libraries to the hackbox.
+	for eachlib in vulnlibs
+		get_shell.scp(eachlib, "/lib", shell)
+	end for
+//Rrn another for loop through vulnlibs to delete vulnlibs from your main machine.
+//You must call your file handling variable every time you delete a file. 
+	for eachlib in vulnlibs
+		file = get_shell.host_computer.File(eachlib)
+		file.delete
+	end for
+//Put aptcli back in the forever box where it can't hurt you.
+computer = get_shell.host_computer
+output = aptcli.move("/", "aptclient.so")
+		print("Home machine is now safe.")
+		print("Hackbox is armed and vulnerable. Proceed with caution.")
