@@ -11,7 +11,9 @@ old code for better performance. Once the body of this codebase is substantial e
 process on a unified hacktool will begin.
 
 All due credits to the tutors this developer has found in the Grey Hack & Pirate Software Communities.
+
 Special mentions; Glitterbelle, Jcp, gk, and Segiro.
 
 https://discord.gg/greyhack
+
 https://discord.gg/piratesoftware
