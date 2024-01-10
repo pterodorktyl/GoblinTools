@@ -1,0 +1,28 @@
+//The hackbox command uses the same syntax as the ssh source file.
+    if params.len < 2 or params.len > 3 then exit("Proper Syntax: startjob user@pass [ip].")
+credentials = params[0].split("@")
+user = credentials[0]
+password = credentials[1]
+port = 22
+//Convert params to integer, which is what connect_service accepts.
+    if params.len == 3 then port = params[2].to_int
+    if typeof(port) != "number" then exit("Invalid port: " + port)
+        print("Logging into hackbox")
+//Declare file handling parameters for yourself. You're a computer now.
+computer = get_shell.host_computer
+//Declare file handling parameters for a list of your required libraries. These libs are located at the top of your directory.
+//Libs that are held in areas outside of the /lib folder do not read as exploitable.
+reqlibs = computer.File("/")
+//Declare a list of the locations that currently hold your required libraries.
+reqlibs = ["/aptclient.so", "/librepository.so" "/metaxploit.so", "/librshell.so", "/crypto.so",]
+// Obtain shell on hackbox to initiate file transfers.
+shell = get_shell.connect_service(params[1], port, user, password, "ssh")
+        print("Arming hackbox.")
+//Copy main machine's /bin to hackbox. This must be done to make sure your hackbox /bin has not been compromised.
+        get_shell.scp("/bin", "/bin", shell)
+//Run a for loop through reqlibs to pass your libraries to the hackbox.
+    for eachlib in reqlibs
+        get_shell.scp(eachlib, "/lib", shell)
+    end for
+
+        print("Hackbox is armed and vulnerable. Proceed with caution.")
