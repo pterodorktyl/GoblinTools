@@ -1,3 +1,6 @@
+// THE 'systemhot' COMMAND IS CURRENTLY UNSAFE DUE TO THE INABILITY TO DOWNLOAD SPECIFIC VERSIONS OF LIBRARIES 
+// IN GREY SCRIPT. USE THE 'hackbox' COMMAND IN TANDEM WITH THE LIBRARIES FOUND AT WWW.SIDIADEV.COM IN GAME.
+
 //The systemhot command uses the same syntax as the ssh source file.
 	if params.len < 2 or params.len > 3 then exit("Proper Syntax: startjob user@pass [ip].")
 credentials = params[0].split("@")
