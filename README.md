@@ -10,5 +10,8 @@ As scripts are updated, previous versions will be kept in order to showcase the 
 old code for better performance. Once the body of this codebase is substantial enough, the development
 process on a unified hacktool will begin.
 
-All due credit to the tutors this developer has found in the Grey Hack & Pirate Software Communities.
+All due credits to the tutors this developer has found in the Grey Hack & Pirate Software Communities.
+Special mentions; Glitterbelle, Jcp, gk, and Segiro.
 
+https://discord.gg/greyhack
+https://discord.gg/piratesoftware
