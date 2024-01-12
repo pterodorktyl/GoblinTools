@@ -1,4 +1,4 @@
-//The hackbox command uses the same syntax as the ssh source file. You should run this command from a root user.
+//The hackbox command uses the same syntax as the ssh source file. You should run this command from root user.
 	if params.len < 2 or params.len > 3 then exit("Proper Syntax: hackbox user@pass [ip].")
 credentials = params[0].split("@")
 user = credentials[0]
@@ -19,7 +19,7 @@ shell = get_shell.connect_service(params[1], port, user, password, "ssh")
 
 		print("Arming hackbox.")
 //Copy main machine's /bin to hackbox via your hackbox shell. This must be done to make sure your hackbox /bin has not been compromised.
-		get_shell.scp("/bin", "/bin", shell)
+		get_shell.scp("/bin", "/", shell)
 //Run a for loop through reqlibs to pass your libraries to the hackbox. Notice that for each copied file, you must get_shell.
 	for eachlib in reqlibs
 		get_shell.scp(eachlib, "/lib", shell)
